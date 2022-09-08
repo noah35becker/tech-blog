@@ -4,8 +4,8 @@
 async function loginFormHandler(event){
     event.preventDefault();
 
-    const email = document.querySelector('#email-login').value.trim();
-    const password = document.querySelector('#password-login').value.trim();
+    const email = $('#email-login').val().trim();
+    const password = $('#password-login').val().trim();
 
     if (email && password){
         const response = await fetch('/api/user/login', {
@@ -28,9 +28,9 @@ async function loginFormHandler(event){
 async function signupFormHandler(event){
     event.preventDefault();
 
-    const username = document.querySelector('#username-signup').value.trim();
-    const email = document.querySelector('#email-signup').value.trim();
-    const password = document.querySelector('#password-signup').value.trim();
+    const username = $('#username-signup').val().trim();
+    const email = $('#email-signup').val().trim();
+    const password = $('#password-signup').val().trim();
 
     if (username && email && password){
         const response = await fetch('/api/user', {
@@ -54,5 +54,5 @@ async function signupFormHandler(event){
 
 
 // EVENT LISTENERS
-document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
-document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);
+$('.login-form').on('submit', loginFormHandler);
+$('.signup-form').on('submit', signupFormHandler);
