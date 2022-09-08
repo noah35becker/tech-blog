@@ -36,15 +36,14 @@ router.get('/:id', async (req, res) => {
                 id: req.params.id
             },
             attributes: {
-                exclude: ['password']
+                exclude: ['password', 'email']
             }
         });
         
-        if (!dbUserData){
+        if (!dbUserData)
             res.status(404).json({message: 'No user found with this ID'});
-            return;
-        }
-        res.json(dbUserData);
+        else
+            res.json(dbUserData);
     }catch (err){
         console.log(err);
         res.status(500).json(err);
@@ -68,7 +67,7 @@ router.post('/', isLoggedOut, async (req, res) => {
 
             const jsonUserData = dbUserData.get({plain: true});
             delete jsonUserData.password;
-            res.json(jsonUserData); // This must occur INSIDE req.session.save
+            res.json(jsonUserData); // This must occur INSIDE req.session.save (due to synchronicity)
         });
     }catch (err){
         console.log(err);
@@ -104,12 +103,11 @@ router.post('/login', isLoggedOut, async (req, res) => {
 
             const jsonUserData = dbUserData.get({plain: true});
             delete jsonUserData.password;
-            res.json({ // This must occur INSIDE req.session.save
+            res.json({ // This must occur INSIDE req.session.save (due to synchronicity)
                 message: 'Login successful',
                 user: jsonUserData
             });
         });
-
     }catch (err){
         console.log(err);
         res.status(500).json(err);
