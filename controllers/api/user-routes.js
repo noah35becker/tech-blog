@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
                 },
                 include: {
                     model: Post,
-                    attributes: ['id', 'title', 'content', 'created_at', 'updated_at'],
+                    attributes: ['id', 'title', 'content', 'createdAt', 'updatedAt'],
                     as: 'posts'
                 }
             });
@@ -42,7 +42,7 @@ router.get('/:id', async (req, res) => {
             },
             include: {
                 model: Post,
-                attributes: ['id', 'title', 'content', 'created_at', 'updated_at'],
+                attributes: ['id', 'title', 'content', 'createdAt', 'updatedAt'],
                 as: 'posts'
             }
         });

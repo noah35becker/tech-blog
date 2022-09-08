@@ -1,2 +1,8 @@
 
 <h3>Welcome, {{user.username}}</h3>
+
+<div class="posts-wrapper">
+    {{#each user.posts as |post|}}
+        {{> post-info post}}
+    {{/each}}
+</div>

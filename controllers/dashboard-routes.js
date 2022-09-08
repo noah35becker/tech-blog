@@ -2,15 +2,28 @@
 // IMPORTS
 const router = require('express').Router();
 const {isLoggedIn} = require('../utils/auth');
-const {User} = require('../models');
+const {User, Post} = require('../models');
 
 
 
 // Dashboard
 router.get('/', isLoggedIn, async (req, res) => {
-    const currentUserData = await User.findByPk(req.session.user_id);
+    let currentUserData = await User.findByPk(req.session.user_id, {
+        include: {
+            model: Post,
+            attributes: ['id', 'title', 'content', 'createdAt', 'updatedAt'],
+            as: 'posts'
+        }
+    });
 
-    res.render('dashboard', {user: currentUserData.get({plain: true}), loggedIn: true})
+    currentUserData = currentUserData.get({plain: true});
+    for (const post of currentUserData.posts){
+        if (post.createdAt.toString() === post.updatedAt.toString()){
+            delete post.updatedAt;
+        }
+    }
+
+    res.render('dashboard', {user: currentUserData, loggedIn: true})
 });
 
 
