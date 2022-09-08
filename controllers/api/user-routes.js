@@ -36,10 +36,7 @@ router.get('/', async (req, res) => {
 // Get one user
 router.get('/:id', async (req, res) => {
     try{
-        const dbUserData = await User.findOne({
-            where: {
-                id: req.params.id
-            },
+        const dbUserData = await User.findByPk(req.params.id, {
             attributes: {
                 exclude: ['password', 'email']
             },
@@ -137,11 +134,7 @@ router.post('/logout', isLoggedIn, (req, res) =>
 // Update user's password
 router.put('/password/:id', isAuthorized, async (req, res) => { // expects {old_password, new_password}
     try{
-        const dbUserData = await User.findOne({
-            where: {
-                id: req.params.id
-            }
-        });
+        const dbUserData = await User.findByPk(req.params.id);
 
         const isOldPwCorrect = await dbUserData.checkPassword(req.body.old_password);
         if (!isOldPwCorrect){
@@ -176,11 +169,7 @@ router.put('/password/:id', isAuthorized, async (req, res) => { // expects {old_
 // Update user's username
 router.put('/username/:id', isAuthorized, async (req, res) => { // expects {username, password}
     try{
-        const dbUserData = await User.findOne({
-            where: {
-                id: req.params.id
-            }
-        });
+        const dbUserData = await User.findByPk(req.params.id);
 
         const isPwCorrect = await dbUserData.checkPassword(req.body.password);
         if (!isPwCorrect){
@@ -214,11 +203,7 @@ router.put('/username/:id', isAuthorized, async (req, res) => { // expects {user
 // Update user's email
 router.put('/email/:id', isAuthorized, async (req, res) => { // expects {email, password}
     try{
-        const dbUserData = await User.findOne({
-            where: {
-                id: req.params.id
-            }
-        });
+        const dbUserData = await User.findByPk(req.params.id);
 
         const isPwCorrect = await dbUserData.checkPassword(req.body.password);
         if (!isPwCorrect){

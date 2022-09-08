@@ -29,10 +29,7 @@ router.get('/', async (req, res) => {
 // Get one
 router.get('/:id', async (req, res) => {
     try{
-        const dbPostData = await Post.findOne({
-            where: {
-                id: req.params.id
-            },
+        const dbPostData = await Post.findByPk(req.params.id, {
             attributes: ['id', 'title', 'content', 'createdAt', 'updatedAt'],
             include: {
                 model: User,
@@ -74,11 +71,7 @@ router.post('/', isLoggedIn, async (req, res) => {
 // Update preexisting
 router.put('/:id', async (req, res) => {
     try{
-        const dbPostData = await Post.findOne({
-            where: {
-                id: req.params.id
-            }
-        });
+        const dbPostData = await Post.findByPk(req.params.id);
 
         if (!dbPostData){
             res.status(404).json({message: 'No post found with this ID'});
@@ -90,18 +83,12 @@ router.put('/:id', async (req, res) => {
             return;
         }
 
-        await dbPostData.update(
+        const updatedPostData = await dbPostData.update(
             req.body,
             {
                 individualHooks: true
             }
         );
-
-        const updatedPostData = await Post.findOne({
-            where: {
-                id: req.params.id
-            }
-        });
 
         res.json({
             message: 'Post successfully updated',
@@ -118,11 +105,7 @@ router.put('/:id', async (req, res) => {
 // Delete
 router.delete('/:id', async (req, res) => {
     try{
-        const dbPostData = await Post.findOne({
-            where: {
-                id: req.params.id
-            }
-        });
+        const dbPostData = await Post.findByPk(req.params.id);
 
         if (!dbPostData){
             res.status(404).json({message: 'No post found with this ID'});
