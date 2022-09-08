@@ -1,7 +1,7 @@
 
 // IMPORTS
 const router = require('express').Router();
-const {isLoggedIn, isAuthorized, isLoggedOut} = require('../../utils/auth');
+const {isLoggedIn, isLoggedOut} = require('../../utils/auth');
 const {User, Post} = require('../../models');
 require('dotenv').config();
 
@@ -132,9 +132,9 @@ router.post('/logout', isLoggedIn, (req, res) =>
 
 
 // Update user's password
-router.put('/password/:id', isAuthorized, async (req, res) => { // expects {old_password, new_password}
+router.put('/update-password', isLoggedIn, async (req, res) => { // expects {old_password, new_password}
     try{
-        const dbUserData = await User.findByPk(req.params.id);
+        const dbUserData = await User.findByPk(req.session.user_id);
 
         const isOldPwCorrect = await dbUserData.checkPassword(req.body.old_password);
         if (!isOldPwCorrect){
@@ -151,8 +151,6 @@ router.put('/password/:id', isAuthorized, async (req, res) => { // expects {old_
             }
         );
 
-        console.log(updatedUserData);
-
         const jsonUserData = updatedUserData.get({plain: true});
         delete jsonUserData.password;
         res.json({
@@ -167,9 +165,9 @@ router.put('/password/:id', isAuthorized, async (req, res) => { // expects {old_
 
 
 // Update user's username
-router.put('/username/:id', isAuthorized, async (req, res) => { // expects {username, password}
+router.put('/update-username', isLoggedIn, async (req, res) => { // expects {username, password}
     try{
-        const dbUserData = await User.findByPk(req.params.id);
+        const dbUserData = await User.findByPk(req.session.user_id);
 
         const isPwCorrect = await dbUserData.checkPassword(req.body.password);
         if (!isPwCorrect){
@@ -201,9 +199,9 @@ router.put('/username/:id', isAuthorized, async (req, res) => { // expects {user
 
 
 // Update user's email
-router.put('/email/:id', isAuthorized, async (req, res) => { // expects {email, password}
+router.put('/update-email', isLoggedIn, async (req, res) => { // expects {email, password}
     try{
-        const dbUserData = await User.findByPk(req.params.id);
+        const dbUserData = await User.findByPk(req.session.user_id);
 
         const isPwCorrect = await dbUserData.checkPassword(req.body.password);
         if (!isPwCorrect){
@@ -235,11 +233,11 @@ router.put('/email/:id', isAuthorized, async (req, res) => { // expects {email, 
 
 
 // Delete user
-router.delete('/:id', isAuthorized, async (req, res) => {
+router.delete('/', isLoggedIn, async (req, res) => {
     try{
         await User.destroy({
             where: {
-                id: req.params.id
+                id: req.session.user_id
             }
         });
             

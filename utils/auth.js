@@ -6,12 +6,6 @@ const isLoggedIn = (req, res, next) => {
         res.redirect('/login');
 };
 
-const isAuthorized = (req, res, next) => {
-    if (req.session.user_id === +req.params.id)
-        next();
-    else
-        res.status(403).json({message: 'Access forbidden'});
-};
 
 const isLoggedOut = (req, res, next) => {
     if (!req.session.loggedIn)
@@ -21,4 +15,4 @@ const isLoggedOut = (req, res, next) => {
 };
 
 
-module.exports={isLoggedIn, isAuthorized, isLoggedOut};
+module.exports={isLoggedIn, isLoggedOut};
