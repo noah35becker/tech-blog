@@ -77,7 +77,10 @@ router.post('/', isLoggedOut, async (req, res) => {
 
             const jsonUserData = dbUserData.get({plain: true});
             delete jsonUserData.password;
-            res.json(jsonUserData); // This must occur INSIDE req.session.save (due to synchronicity)
+            res.json({
+                message: 'New user successfully created + logged in',
+                user: jsonUserData
+            }); // This must occur INSIDE req.session.save (due to synchronicity)
         });
     }catch (err){
         console.log(err);
@@ -146,22 +149,21 @@ router.put('/password/:id', isAuthorized, async (req, res) => { // expects {old_
             return;
         }
 
-        const updatedUserData = await User.update(
+        const updatedUserData = await dbUserData.update(
             {
                 password: req.body.new_password
             },
             {
                 individualHooks: true,
-                where: {
-                    id: req.params.id
-                }
             }
         );
 
-        const jsonUserData = updatedUserData[1][0].get({plain: true});
+        console.log(updatedUserData);
+
+        const jsonUserData = updatedUserData.get({plain: true});
         delete jsonUserData.password;
         res.json({
-            message: 'Password updated',
+            message: 'Password successfully updated',
             user: jsonUserData
         });
     }catch (err){
@@ -186,23 +188,20 @@ router.put('/username/:id', isAuthorized, async (req, res) => { // expects {user
             return;
         }
 
-        const updatedUserData = await User.update(
+        const updatedUserData = await dbUserData.update(
             {
                 username: req.body.username,
                 password: req.body.password
             },
             {
                 individualHooks: true,
-                where: {
-                    id: req.params.id
-                }
             }
         );
 
-        const jsonUserData = updatedUserData[1][0].get({plain: true});
+        const jsonUserData = updatedUserData.get({plain: true});
         delete jsonUserData.password;
         res.json({
-            message: 'Username updated',
+            message: 'Username successfully updated',
             user: jsonUserData
         });
     }catch (err){
@@ -227,23 +226,20 @@ router.put('/email/:id', isAuthorized, async (req, res) => { // expects {email, 
             return;
         }
 
-        const updatedUserData = await User.update(
+        const updatedUserData = await dbUserData.update(
             {
                 email: req.body.email,
                 password: req.body.password
             },
             {
-                individualHooks: true,
-                where: {
-                    id: req.params.id
-                }
+                individualHooks: true
             }
         );
 
-        const jsonUserData = updatedUserData[1][0].get({plain: true});
+        const jsonUserData = updatedUserData.get({plain: true});
         delete jsonUserData.password;
         res.json({
-            message: 'Email updated',
+            message: 'Email successfully updated',
             user: jsonUserData
         });
     }catch (err){
@@ -262,7 +258,7 @@ router.delete('/:id', isAuthorized, async (req, res) => {
             }
         });
             
-        req.session.destroy(() => res.status(200).json({message: 'Deleted and logged out'}));
+        req.session.destroy(() => res.json({message: 'Deleted and logged out'}));
     }catch (err){
         console.log(err);
         res.status(500).json(err);
