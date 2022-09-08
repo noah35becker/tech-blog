@@ -5,7 +5,11 @@ const sequelize = require('../config/connection');
 
 
 // Create the Post model
-class Post extends Model{}
+class Post extends Model{
+    isLinkedToUser(userId){
+        return userId === this.user_id;
+    }
+}
 
 
 // Define table columns + configuration
