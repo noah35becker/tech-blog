@@ -2,20 +2,25 @@
 // IMPORTS
 const router = require('express').Router();
 const {isLoggedIn, isAuthorized, isLoggedOut} = require('../../utils/auth');
-const {User} = require('../../models');
+const {User, Post} = require('../../models');
 require('dotenv').config();
 
 
 
 // REQUESTS
 
-// Get all users (*FOR DEV USE ONLY)
+// Get all users (FOR DEV PURPOSES ONLY)
 router.get('/', async (req, res) => {
     if (req.body.admin_password === process.env.SEE_ALL_USERS_KEY)
         try{
             const dbUsersData = await User.findAll({
                 attributes: {
                     exclude: ['password']
+                },
+                include: {
+                    model: Post,
+                    attributes: ['id', 'title', 'content', 'created_at', 'updated_at'],
+                    as: 'posts'
                 }
             });
             res.json(dbUsersData);
@@ -37,6 +42,11 @@ router.get('/:id', async (req, res) => {
             },
             attributes: {
                 exclude: ['password', 'email']
+            },
+            include: {
+                model: Post,
+                attributes: ['id', 'title', 'content', 'created_at', 'updated_at'],
+                as: 'posts'
             }
         });
         

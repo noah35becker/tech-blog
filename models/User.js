@@ -43,7 +43,7 @@ User.init(
     },
     { // Table configuration options:
         sequelize, // Sequelize connection
-        timestamps: false, // don't automatically create createdAt / updatedAt timestamp fields
+        timestamps: false, // don't automatically create created_at / updated_at timestamp fields
         freezeTableName: true, // don't pluralize name of database table
         underscored: true, // use under_scores instead of camelCasing
         modelName: 'user', // make the table name lowercase in the database
