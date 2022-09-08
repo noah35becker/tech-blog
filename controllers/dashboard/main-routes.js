@@ -1,10 +1,12 @@
 
 // IMPORTS
 const router = require('express').Router();
-const {isLoggedIn} = require('../utils/auth');
-const {User, Post} = require('../models');
+const {isLoggedIn} = require('../../utils/auth');
+const {User, Post} = require('../../models');
 
 
+
+// ROUTE
 
 // Dashboard
 router.get('/', isLoggedIn, async (req, res) => {
@@ -23,7 +25,7 @@ router.get('/', isLoggedIn, async (req, res) => {
         }
     }
 
-    res.render('dashboard', {user: currentUserData, loggedIn: true})
+    res.render('dashboard', {user: currentUserData, loggedIn: true});
 });
 
 
