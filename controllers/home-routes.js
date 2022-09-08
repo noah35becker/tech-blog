@@ -2,6 +2,7 @@
 // IMPORTS
 const router = require('express').Router();
 const sequelize = require('../config/connection');
+const {isLoggedIn, isLoggedOut} = require('../utils/auth');
 
 
 
@@ -12,12 +13,15 @@ router.get('/', (req, res) => {
 
 
 // Login page
-router.get('/login', (req, res) => {
-    if (req.session.loggedIn)
-        res.redirect('/');
-    else
-        res.render('login', {loggedIn: false});
-});
+router.get('/login', isLoggedOut, (req, res) =>
+    res.render('login', {loggedIn: false})
+);
+
+
+// Dashboard
+router.get('/dashboard', isLoggedIn, (req, res) =>
+    res.render('dashboard', {loggedIn: true})
+);
 
 
 
