@@ -13,14 +13,14 @@
 
 <body>
     <header>
-        <h1>Tech blog</h1>
+        <h1>Tech Blog</h1>
 
         <nav>
-            <a href="/dashboard">Dashboard</a>
+            <a href="/dashboard" class="btn btn-link">Dashboard</a>
             {{#if loggedIn}}
-                <button type="button" class="btn btn-link logout-btn">Logout</button>
+                <button id="logout" type="button" class="btn btn-link logout-btn">Logout</button>
             {{else}}
-                <a href="/login">Login</a>
+                <a href="/login" class="btn btn-link">Login</a>
             {{/if}}
         </nav>
     </header>
@@ -33,6 +33,9 @@
         Designed and coded by Noah Becker&nbsp;&nbsp;<span class="border-start border-dark">&nbsp;&nbsp;&copy;&nbsp;<span class="this-yr"></span>
     </footer>
 
-    <script src="javascript/footer.js"></script>
+    <script src="/javascript/footer.js"></script>
+    {{#if loggedIn}}
+        <script src="/javascript/logout.js"></script>
+    {{/if}}
 </body>
 </html>

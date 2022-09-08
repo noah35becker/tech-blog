@@ -11,6 +11,15 @@ router.get('/', (req, res) => {
 });
 
 
+// Login page
+router.get('/login', (req, res) => {
+    if (req.session.loggedIn)
+        res.redirect('/');
+    else
+        res.render('login', {loggedIn: false});
+});
+
+
 
 // EXPORT
 module.exports = router;
