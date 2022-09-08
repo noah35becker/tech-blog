@@ -3,24 +3,28 @@
 const router = require('express').Router();
 const {isLoggedIn, isAuthorized, isLoggedOut} = require('../../utils/auth');
 const {User} = require('../../models');
+require('dotenv').config();
 
 
 
 // REQUESTS
 
-// Get all users
+// Get all users (*FOR DEV USE ONLY)
 router.get('/', async (req, res) => {
-    try{
-        const dbUsersData = await User.findAll({
-            attributes: {
-                exclude: ['password']
-            }
-        });
-        res.json(dbUsersData);
-    }catch (err){
-        console.log(err);
-        res.status(500).json(err);
-    }
+    if (req.body.admin_password === process.env.SEE_ALL_USERS_KEY)
+        try{
+            const dbUsersData = await User.findAll({
+                attributes: {
+                    exclude: ['password']
+                }
+            });
+            res.json(dbUsersData);
+        }catch (err){
+            console.log(err);
+            res.status(500).json(err);
+        }
+    else
+        res.status(403).json({message: 'Access forbidden'});
 });
 
 
