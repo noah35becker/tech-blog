@@ -1,0 +1,16 @@
+
+<article class="comment" comment-id="{{id}}">
+    <p class="content">{{content}}</p>
+
+    {{#if (compare user.id currentUserId)}}
+        <button class="delete-comment-btn btn btn-primary">Delete</button>
+    {{/if}}
+
+    <div class="meta">
+        {{user.username}}&nbsp;&nbsp;|&nbsp;&nbsp;{{format_date createdAt}}
+    </div>
+
+    {{#if (compare user.id currentUserId)}}
+        <script src="/javascript/delete-comment.js"></script>
+    {{/if}}
+</article>
