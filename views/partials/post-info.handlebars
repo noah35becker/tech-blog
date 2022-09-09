@@ -10,8 +10,8 @@
         {{/if}}
 
         {{#if postedByCurrentUser}}
-            <a class="edit-post-btn btn btn-primary" href="">Edit</a>
-            <a class="delete-post-btn btn btn-primary" href="">Delete</a>
+            <button class="edit-post-btn btn btn-primary">Edit</button>
+            <button class="delete-post-btn btn btn-primary">Delete</button>
         {{/if}}
     </header>
 
@@ -28,4 +28,8 @@
             Created at: {{createdAt}}
         {{/if}}
     </div>
+
+    {{#if postedByCurrentUser}}
+        <script src="/javascript/update-post-info/delete.js"></script>
+    {{/if}}
 </article>
