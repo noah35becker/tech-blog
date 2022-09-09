@@ -3,8 +3,15 @@
     {{>post-info post=this currentUserId=../currentUserId linkedTitle=false editNow=../editNow}}
 {{/with}}
 
+<div class="add-comment-wrapper">
+    <button type="button" class="add-comment-btn btn btn-primary">Add comment</button>
+</div>
+
 <div class="comments-wrapper">
     {{#each post.comments}}
         {{>comment this currentUserId=../currentUserId}}
     {{/each}}
 </div>
+
+
+<script src="/javascript/comment/add.js"></script>
