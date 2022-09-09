@@ -5,11 +5,14 @@
     <p class="content">{{content}}</p>
 
     <div class="meta">
+        {{#if showUsernames}}
+            Posted by: {{user.username}} |&nbsp;
+        {{/if}}
+        
         {{#if updatedAt}}
             Updated at: {{updatedAt}}
         {{else}}
             Created at: {{createdAt}}
         {{/if}}
-        
     </div>
 </article>
