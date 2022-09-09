@@ -39,4 +39,4 @@ Comment.belongsTo(Post, {
 
 
 // EXPORTS
-module.exports = {User, Post};
+module.exports = {User, Post, Comment};

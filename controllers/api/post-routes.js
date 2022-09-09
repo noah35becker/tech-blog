@@ -2,7 +2,7 @@
 // IMPORTS
 const router = require('express').Router();
 const {isLoggedIn} = require('../../utils/auth');
-const {Post, User} = require('../../models');
+const {Post, User, Comment} = require('../../models');
 
 
 
@@ -13,10 +13,22 @@ router.get('/', async (req, res) => {
     try{
         const dbPostsData = await Post.findAll({
             attributes: ['id', 'title', 'content', 'createdAt', 'updatedAt'],
-            include: {
-                model: User,
-                attributes: ['id', 'username']
-            }
+            include: [
+                {
+                    model: User,
+                    attributes: ['id', 'username']
+                },
+                {
+                    model: Comment,
+                    attributes: ['id', 'content', 'createdAt'],
+                    as: 'comments',
+                    include: {
+                        model: User,
+                        attributes: ['id', 'username']
+                    },
+                    order: [['createdAt', 'ASC']]
+                }
+            ]
         });
         res.json(dbPostsData);
     }catch (err){
@@ -31,10 +43,22 @@ router.get('/:id', async (req, res) => {
     try{
         const dbPostData = await Post.findByPk(req.params.id, {
             attributes: ['id', 'title', 'content', 'createdAt', 'updatedAt'],
-            include: {
-                model: User,
-                attributes: ['id', 'username']
-            }
+            include: [
+                {
+                    model: User,
+                    attributes: ['id', 'username']
+                },
+                {
+                    model: Comment,
+                    attributes: ['id', 'content', 'createdAt'],
+                    as: 'comments',
+                    include: {
+                        model: User,
+                        attributes: ['id', 'username']
+                    },
+                    order: [['createdAt', 'ASC']]
+                }
+            ]
         });
         
         if (!dbPostData)
@@ -48,7 +72,7 @@ router.get('/:id', async (req, res) => {
 });
 
 
-// // Create new
+// Create new
 router.post('/', isLoggedIn, async (req, res) => {
     try {
         const dbPostData = await Post.create({

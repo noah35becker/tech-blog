@@ -5,7 +5,11 @@ const sequelize = require('../config/connection');
 
 
 // Create the Comment model
-class Comment extends Model{}
+class Comment extends Model{
+    isLinkedToUser(userId){
+        return userId === this.user_id;
+    }
+}
 
 
 // Define table columns + configuration

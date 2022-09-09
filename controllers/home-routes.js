@@ -2,7 +2,7 @@
 // IMPORTS
 const router = require('express').Router();
 const {isLoggedOut} = require('../utils/auth');
-const {Post, User} = require('../models');
+const {Post, User, Comment} = require('../models');
 const {purgeUpdatedAtProperty} = require('../utils/general-helpers');
 
 
@@ -13,10 +13,16 @@ const {purgeUpdatedAtProperty} = require('../utils/general-helpers');
 router.get('/', async (req, res) => {
     let dbPostsData = await Post.findAll({
         attributes: ['id', 'title', 'content', 'createdAt', 'updatedAt'],
-        include: {
-            model: User,
-            attributes: ['id', 'username']
-        },
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'username']
+            },
+            {
+                model: Comment,
+                as: 'comments'
+            }
+        ],
         order: [['updatedAt', 'DESC']]
     });
 
@@ -44,10 +50,22 @@ router.get('/login', isLoggedOut, (req, res) =>
 router.get('/post/:id', async (req, res) => {
     let dbPostData = await Post.findByPk(req.params.id, {
         attributes: ['id', 'title', 'content', 'createdAt', 'updatedAt'],
-        include: {
-            model: User,
-            attributes: ['id', 'username']
-        }
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'username'],
+            },
+            {
+                model: Comment,
+                attributes: ['id', 'content', 'createdAt'],
+                as: 'comments',
+                include: {
+                    model: User,
+                    attributes: ['id', 'username']
+                },
+                order: [['createdAt', 'ASC']]
+            }
+        ]
     });
 
     dbPostData = dbPostData.get({plain: true});
