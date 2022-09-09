@@ -6,5 +6,7 @@ module.exports = {
         return DateTime.fromISO(new Date(date).toISOString()).toFormat("MMM d, yyyy 'at' HH:mm:ss");
     },
 
-    format_plural: (word, quantity) => quantity === 1 ? word : word+'s'
+    format_plural: (word, quantity) => quantity === 1 ? word : word+'s',
+
+    compare: (a, b) => a === b
 };

@@ -1,6 +1,6 @@
 
 <div class="posts-wrapper">
     {{#each posts as |post|}}
-        {{>post-info post=post showUsernames=true linkedTitle=true}}
+        {{>post-info post=post currentUserId=../currentUserId showUsernames=true linkedTitle=true}}
     {{/each}}
 </div>

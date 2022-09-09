@@ -9,6 +9,7 @@
             0
         {{/if}}
 >
+
     <header class="title-wrapper">
         {{#if linkedTitle}}
             <a href="/post/{{id}}">
@@ -23,7 +24,7 @@
         <p class="content">{{content}}</p>
     </div>
 
-    {{#if postedByCurrentUser}}
+    {{#if (compare user.id currentUserId)}}
         <button class="edit-post-btn btn btn-primary">Edit</button>
         <button class="delete-post-btn btn btn-primary">Delete</button>
     {{/if}}
@@ -42,7 +43,7 @@
         {{/if}}
     </div>
 
-    {{#if postedByCurrentUser}}
+    {{#if (compare user.id currentUserId)}}
         <script src="/javascript/update-post-info/edit.js"></script>
         <script src="/javascript/update-post-info/delete.js"></script>
     {{/if}}

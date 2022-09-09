@@ -3,7 +3,7 @@
 
 <div class="posts-wrapper">
     {{#each user.posts as |post|}}
-        {{>post-info post=post showUsernames=false linkedTitle=true}}
+        {{>post-info post=post currentUserId=../currentUserId showUsernames=false linkedTitle=true}}
     {{/each}}
 </div>
 

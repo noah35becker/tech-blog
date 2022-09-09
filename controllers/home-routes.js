@@ -26,16 +26,13 @@ router.get('/', async (req, res) => {
         order: [['updatedAt', 'DESC']]
     });
 
-    dbPostsData = dbPostsData.map(post => {
-        let output = post.get({plain: true});
-        output.postedByCurrentUser = req.session.user_id === output.user.id;
-        return output;
-    });
+    dbPostsData = dbPostsData.map(post => post.get({plain: true}));
     purgeUpdatedAtProperty(dbPostsData);
 
     res.render('homepage', {
         posts: dbPostsData,
         loggedIn: req.session.loggedIn,
+        currentUserId: req.session.user_id
     });
 });
 
@@ -69,13 +66,13 @@ router.get('/post/:id', async (req, res) => {
     });
 
     dbPostData = dbPostData.get({plain: true});
-    dbPostData.postedByCurrentUser = req.session.user_id === dbPostData.user.id;
     dbPostData = purgeUpdatedAtProperty([dbPostData])[0];
 
-    res.render('post', {
+    res.render('single-post', {
         post: dbPostData,
         loggedIn: req.session.loggedIn,
-        editNow: +req.query.edit_now
+        editNow: +req.query.edit_now,
+        currentUserId: req.session.user_id
     })
 });
 
