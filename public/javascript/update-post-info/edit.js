@@ -1,5 +1,6 @@
 
 // GLOBAL VARIABLES
+
 const secondToLastUrlPath = window.location.toString().split('/')[window.location.toString().split('/').length - 2];
 
 const titleWrapperEl = $('.title-wrapper');
@@ -88,6 +89,6 @@ $('article.post').on('click', '.save-post-btn', async function(){
 
 
 
-// AUTO-TRIGGER if edit-now attribute is '1'
+// AUTO-TRIGGER if edit-now attribute === '1'
 if (secondToLastUrlPath === 'post' && +$('article.post').attr('edit-now') === 1)
     $('.edit-post-btn').click();
