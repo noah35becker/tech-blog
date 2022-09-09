@@ -30,8 +30,10 @@
 
     <div class="meta">
         {{#if showUsernames}}
-            Posted by: {{user.username}} |&nbsp;
+            Posted by: {{user.username}}&nbsp;&nbsp;|&nbsp;
         {{/if}}
+
+        {{comments.length}} {{format_plural 'comment' comments.length}}&nbsp;&nbsp;|&nbsp;
         
         {{#if updatedAt}}
             Updated on {{format_date updatedAt}}
