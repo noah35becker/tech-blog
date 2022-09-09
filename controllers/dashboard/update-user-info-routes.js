@@ -23,6 +23,12 @@ router.get('/email', isLoggedIn, (req, res) => {
 });
 
 
+// Delete account
+router.get('/delete-account', isLoggedIn, (req, res) => {
+    res.render('update-user-info/delete-account', {loggedIn: true});
+});
+
+
 
 // EXPORT
 module.exports = router;

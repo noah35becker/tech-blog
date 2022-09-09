@@ -233,13 +233,17 @@ router.put('/update-email', isLoggedIn, async (req, res) => { // expects {email,
 
 
 // Delete user
-router.delete('/', isLoggedIn, async (req, res) => {
+router.delete('/', isLoggedIn, async (req, res) => { // expects {password}
     try{
-        await User.destroy({
-            where: {
-                id: req.session.user_id
-            }
-        });
+        const dbUserData = await User.findByPk(req.session.user_id);
+
+        const isPwCorrect = await dbUserData.checkPassword(req.body.password);
+        if (!isPwCorrect){
+            res.status(400).json({message: 'Incorrect password'});
+            return;
+        }
+        
+        await dbUserData.destroy();
             
         req.session.destroy(() => res.json({message: 'Deleted and logged out'}));
     }catch (err){
