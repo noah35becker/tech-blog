@@ -1,6 +1,10 @@
 
 <h3>Welcome, {{user.username}}</h3>
 
+<div class="new-post-wrapper">
+    <button type="button" class="new-post-btn btn btn-primary">New post</button>
+</div>
+
 <div class="posts-wrapper">
     {{#each user.posts as |post|}}
         {{>post-info post=post currentUserId=../currentUserId showUsernames=false linkedTitle=true}}
@@ -14,4 +18,5 @@
     <button id="delete-account-dashboard-btn" type="button" class="btn btn-primary">Delete account</button>
 </div>
 
-<script src="/javascript/update-user-info/dashboard-btns.js"></script>
+<script src="/javascript/post/new.js"></script>
+<script src="/javascript/user/dashboard-btns.js"></script>

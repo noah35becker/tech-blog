@@ -6,7 +6,7 @@ async function deleteCommentButtonHandler(commentId){
     });
 
     if (response.ok)
-        location.reload();
+        document.location.reload();
     else
         alert(response.statusText);
 }

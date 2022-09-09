@@ -50,7 +50,7 @@ async function savePostBtnHandler(postId){
         method: 'put',
         body: JSON.stringify({
             title: updatedTitleVal,
-            content: updatedContentVal,
+            content: updatedContentVal
         }),
         headers: {'Content-Type': 'application/json'}
     });
