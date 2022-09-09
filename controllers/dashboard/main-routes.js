@@ -21,6 +21,8 @@ router.get('/', isLoggedIn, async (req, res) => {
     });
 
     currentUserData = currentUserData.get({plain: true});
+    for (const post of currentUserData.posts)
+        post.postedByCurrentUser = true;
     purgeUpdatedAtProperty(currentUserData.posts);
 
     res.render('dashboard', {

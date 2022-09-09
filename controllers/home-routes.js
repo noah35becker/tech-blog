@@ -15,17 +15,21 @@ router.get('/', async (req, res) => {
         attributes: ['id', 'title', 'content', 'createdAt', 'updatedAt'],
         include: {
             model: User,
-            attributes: ['username']
+            attributes: ['id', 'username']
         },
         order: [['updatedAt', 'DESC']]
     });
 
-    dbPostsData = dbPostsData.map(post => post.get({plain: true}));
+    dbPostsData = dbPostsData.map(post => {
+        let output = post.get({plain: true});
+        output.postedByCurrentUser = req.session.user_id === output.user.id;
+        return output;
+    });
     purgeUpdatedAtProperty(dbPostsData);
 
     res.render('homepage', {
         posts: dbPostsData,
-        loggedIn: req.session.loggedIn
+        loggedIn: req.session.loggedIn,
     });
 });
 

@@ -1,6 +1,12 @@
 
-<article class="post">
-    <h5 class="title">{{title}}</h5>
+<article class="post" post-id="{{id}}">
+    <header>
+        <h5 class="title">{{title}}</h5>
+        {{#if postedByCurrentUser}}
+            <a class="edit-post-btn btn btn-primary" href="">Edit</a>
+            <a class="delete-post-btn btn btn-primary" href="">Delete</a>
+        {{/if}}
+    </header>
 
     <p class="content">{{content}}</p>
 
