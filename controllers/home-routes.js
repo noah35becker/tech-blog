@@ -54,11 +54,10 @@ router.get('/post/:id', async (req, res) => {
     dbPostData.postedByCurrentUser = req.session.user_id === dbPostData.user.id;
     dbPostData = purgeUpdatedAtProperty([dbPostData])[0];
 
-    console.log(dbPostData);
-
     res.render('post', {
         post: dbPostData,
-        loggedIn: req.session.loggedIn
+        loggedIn: req.session.loggedIn,
+        editNow: +req.query.edit_now
     })
 });
 

@@ -1,6 +1,15 @@
 
-<article class="post" post-id="{{id}}">
-    <header>
+<article
+    class="post"
+    post-id="{{id}}"
+    edit-now=
+        {{#if editNow}}
+            1
+        {{else}}
+            0
+        {{/if}}
+>
+    <header class="title-wrapper">
         {{#if linkedTitle}}
             <a href="/post/{{id}}">
                 <h5 class="title">{{title}}</h5>
@@ -8,14 +17,16 @@
         {{else}}
             <h5 class="title">{{title}}</h5>
         {{/if}}
-
-        {{#if postedByCurrentUser}}
-            <button class="edit-post-btn btn btn-primary">Edit</button>
-            <button class="delete-post-btn btn btn-primary">Delete</button>
-        {{/if}}
     </header>
 
-    <p class="content">{{content}}</p>
+    <div class="content-wrapper">
+        <p class="content">{{content}}</p>
+    </div>
+
+    {{#if postedByCurrentUser}}
+        <button class="edit-post-btn btn btn-primary">Edit</button>
+        <button class="delete-post-btn btn btn-primary">Delete</button>
+    {{/if}}
 
     <div class="meta">
         {{#if showUsernames}}
@@ -30,6 +41,7 @@
     </div>
 
     {{#if postedByCurrentUser}}
+        <script src="/javascript/update-post-info/edit.js"></script>
         <script src="/javascript/update-post-info/delete.js"></script>
     {{/if}}
 </article>
