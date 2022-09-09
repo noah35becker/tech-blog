@@ -9,7 +9,7 @@ require('dotenv').config();
 const handlebarsHelpers = require('./utils/handlebars-helpers');
 
 const exphbs = require('express-handlebars');
-    const hbs = exphbs.create({handlebarsHelpers});
+    const hbs = exphbs.create({helpers: handlebarsHelpers});
 
 const sequelize = require('./config/connection');
 
