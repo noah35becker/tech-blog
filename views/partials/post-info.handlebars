@@ -1,7 +1,14 @@
 
 <article class="post" post-id="{{id}}">
     <header>
-        <h5 class="title">{{title}}</h5>
+        {{#if linkedTitle}}
+            <a href="/post/{{id}}">
+                <h5 class="title">{{title}}</h5>
+            </a>
+        {{else}}
+            <h5 class="title">{{title}}</h5>
+        {{/if}}
+
         {{#if postedByCurrentUser}}
             <a class="edit-post-btn btn btn-primary" href="">Edit</a>
             <a class="delete-post-btn btn btn-primary" href="">Delete</a>

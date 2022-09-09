@@ -40,6 +40,29 @@ router.get('/login', isLoggedOut, (req, res) =>
 );
 
 
+// Individual post page
+router.get('/post/:id', async (req, res) => {
+    let dbPostData = await Post.findByPk(req.params.id, {
+        attributes: ['id', 'title', 'content', 'createdAt', 'updatedAt'],
+        include: {
+            model: User,
+            attributes: ['id', 'username']
+        }
+    });
+
+    dbPostData = dbPostData.get({plain: true});
+    dbPostData.postedByCurrentUser = req.session.user_id === dbPostData.user.id;
+    dbPostData = purgeUpdatedAtProperty([dbPostData])[0];
+
+    console.log(dbPostData);
+
+    res.render('post', {
+        post: dbPostData,
+        loggedIn: req.session.loggedIn
+    })
+});
+
+
 
 // EXPORT
 module.exports = router;

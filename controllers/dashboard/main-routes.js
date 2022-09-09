@@ -7,7 +7,8 @@ const {purgeUpdatedAtProperty} = require('../../utils/general-helpers');
 
 
 
-// Dashboard route
+// ROUTES
+
 router.get('/', isLoggedIn, async (req, res) => {
     let currentUserData = await User.findByPk(req.session.user_id, {
         include: {
