@@ -1,5 +1,7 @@
 
-// GLOBAL VARIABLES
+function newPostSpace(){
+
+// VARIABLES
 
 const newPostWrapperEl = $('.new-post-wrapper');
 
@@ -49,3 +51,7 @@ async function saveNewPostBtnHandler(){
 // EVENT LISTENERS
 $('.new-post-wrapper').on('click', '.new-post-btn', newPostBtnHandler);
 $('.new-post-wrapper').on('click', '.save-new-post-btn', saveNewPostBtnHandler);
+
+}
+
+newPostSpace();

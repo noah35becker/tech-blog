@@ -1,5 +1,7 @@
 
-// GLOBAL VARIABLES
+function addCommentSpace(){
+    
+// VARIABLES
 const addCommentWrapperEl = $('.add-comment-wrapper');
 const newCommentEl = $('<textarea id="new-comment" placeholder="new comment" />');
 
@@ -44,3 +46,7 @@ async function saveNewCommentBtnHandler(){
 // EVENT LISTENERS
 $('.add-comment-wrapper').on('click', '.add-comment-btn', addCommentBtnHandler);
 $('.add-comment-wrapper').on('click', '.save-new-comment-btn', saveNewCommentBtnHandler);
+
+}
+
+addCommentSpace();

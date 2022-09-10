@@ -1,5 +1,7 @@
 
-// GLOBAL VARIABLES
+function editPostSpace(){
+
+// VARIABLES
 
 const secondToLastUrlPath = location.toString().split('/')[location.toString().split('/').length - 2];
 
@@ -81,3 +83,7 @@ $('article.post').on('click', '.save-post-btn', async function(){
 // AUTO-TRIGGER if edit-now attribute === '1'
 if (secondToLastUrlPath === 'post' && +$('article.post').attr('edit-now') === 1)
     $('.edit-post-btn').click();
+
+}
+
+editPostSpace();
