@@ -6,19 +6,21 @@ async function updatePasswordFormHandler(event){
     const old_password = $('#old-password').val();
     const new_password = $('#new-password').val();
 
-    const response = await fetch('/api/user/update-password', {
-        method: 'put',
-        body: JSON.stringify({
-            old_password,
-            new_password
-        }),
-        headers: {'Content-Type': 'application/json'}
-    });
+    if (old_password && new_password){
+        const response = await fetch('/api/user/update-password', {
+            method: 'put',
+            body: JSON.stringify({
+                old_password,
+                new_password
+            }),
+            headers: {'Content-Type': 'application/json'}
+        });
 
-    if (response.ok){
-        document.location.replace('/dashboard');
-    } else
-        alert(response.statusText);
+        if (response.ok){
+            location.replace('/dashboard');
+        } else
+            alert(response.statusText);
+    }
 }
 
 

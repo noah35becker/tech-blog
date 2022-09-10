@@ -5,14 +5,14 @@ async function deletePostBtnHandler(postId){
         method: 'delete'
     });
 
-    const secondToLastUrlPath = window.location.toString().split('/')[window.location.toString().split('/').length - 2];
-    const lastUrlPath = window.location.toString().split('/')[window.location.toString().split('/').length - 1];
+    const secondToLastUrlPath = location.toString().split('/')[location.toString().split('/').length - 2];
+    const lastUrlPath = location.toString().split('/')[location.toString().split('/').length - 1];
 
     if (response.ok){
         if (secondToLastUrlPath === 'post' || lastUrlPath === 'dashboard')
-            document.location.replace('/dashboard');
+            location.replace('/dashboard');
         else
-            document.location.replace('/');
+            location.replace('/');
     }else
         alert(response.statusText);
 }

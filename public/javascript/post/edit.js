@@ -1,7 +1,7 @@
 
 // GLOBAL VARIABLES
 
-const secondToLastUrlPath = window.location.toString().split('/')[window.location.toString().split('/').length - 2];
+const secondToLastUrlPath = location.toString().split('/')[location.toString().split('/').length - 2];
 
 const titleWrapperEl = $('.title-wrapper');
 const contentWrapperEl = $('.content-wrapper');
@@ -19,8 +19,9 @@ const deletePostBtnEl = $('.delete-post-btn');
 // FUNCTIONS
 
 function editPostBtnHandler(postId){
+
     if (secondToLastUrlPath !== 'post'){
-        document.location.replace(`/post/${postId}?edit_now=1`);
+        location.replace(`/post/${postId}?edit_now=1`);
         return;
     }
 
@@ -43,36 +44,24 @@ function editPostBtnHandler(postId){
 
 
 async function savePostBtnHandler(postId){
-    const updatedTitleVal = titleEditorEl.val();
-    const updatedContentVal = contentEditorEl.val();
+    const updatedTitleVal = titleEditorEl.val().trim();
+    const updatedContentVal = contentEditorEl.val().trim();
     
-    const response = await fetch(`/api/post/${postId}`,{
-        method: 'put',
-        body: JSON.stringify({
-            title: updatedTitleVal,
-            content: updatedContentVal
-        }),
-        headers: {'Content-Type': 'application/json'}
-    });
+    if (updatedTitleVal && updatedContentVal){
+        const response = await fetch(`/api/post/${postId}`,{
+            method: 'put',
+            body: JSON.stringify({
+                title: updatedTitleVal,
+                content: updatedContentVal
+            }),
+            headers: {'Content-Type': 'application/json'}
+        });
 
-    if (response.ok){
-        titleStaticEl.text(updatedTitleVal);
-        contentStaticEl.text(updatedContentVal);
-
-        titleEditorEl.detach();
-        contentEditorEl.detach();
-
-        titleWrapperEl.append(titleStaticEl);
-        contentWrapperEl.append(contentStaticEl);
-
-        $('.save-post-btn')
-            .removeClass('save-post-btn')
-            .addClass('edit-post-btn')
-            .text('Edit');
-        
-        deletePostBtnEl.show();
-    }else
-        alert(response.statusText);
+        if (response.ok)
+            location.replace(location.toString().split('?')[0]);
+        else
+            alert(response.statusText);
+    }
 }
 
 

@@ -5,18 +5,20 @@ async function deleteAccountFormHandler(event){
 
     const password = $('#password').val();
 
-    const response = await fetch('/api/user/', {
-        method: 'delete',
-        body: JSON.stringify({
-            password
-        }),
-        headers: {'Content-Type': 'application/json'}
-    });
+    if (password){
+        const response = await fetch('/api/user/', {
+            method: 'delete',
+            body: JSON.stringify({
+                password
+            }),
+            headers: {'Content-Type': 'application/json'}
+        });
 
-    if (response.ok){
-        document.location.replace('/login');
-    } else
-        alert(response.statusText);
+        if (response.ok){
+            location.replace('/login');
+        } else
+            alert(response.statusText);
+    }
 }
 
 

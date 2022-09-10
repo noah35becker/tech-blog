@@ -24,30 +24,24 @@ function newPostBtnHandler(){
 
 
 async function saveNewPostBtnHandler(){
-    const response = await fetch('/api/post',{
-        method: 'post',
-        body: JSON.stringify({
-            title: newTitleEl.val(),
-            content: newContentEl.val()
-        }),
-        headers: {'Content-Type': 'application/json'}
-    });
+    const newTitle = newTitleEl.val().trim();
+    const newContent = newContentEl.val().trim();
 
-    if (response.ok){
-        newTitleEl.val('');
-        newContentEl.val('');
-        
-        newTitleEl.detach();
-        newContentEl.detach();
+    if (newTitle && newContent){
+        const response = await fetch('/api/post',{
+            method: 'post',
+            body: JSON.stringify({
+                title: newTitleEl.val(),
+                content: newContentEl.val()
+            }),
+            headers: {'Content-Type': 'application/json'}
+        });
 
-        $('.save-new-post-btn')
-            .removeClass('save-new-post-btn')
-            .addClass('new-post-btn')
-            .text('New post');
-
-        document.location.reload();
-    }else
-        alert(response.statusText);
+        if (response.ok){
+            location.reload();
+        }else
+            alert(response.statusText);
+    }
 }
 
 

@@ -22,19 +22,21 @@ function addCommentBtnHandler(){
 async function saveNewCommentBtnHandler(){
     const newComment = newCommentEl.val().trim();
 
-    const response = await fetch('/api/comment',{
-        method: 'post',
-        body: JSON.stringify({
-            content: newComment,
-            post_id: postId
-        }),
-        headers: {'Content-Type': 'application/json'}
-    });
+    if (newComment){
+        const response = await fetch('/api/comment',{
+            method: 'post',
+            body: JSON.stringify({
+                content: newComment,
+                post_id: postId
+            }),
+            headers: {'Content-Type': 'application/json'}
+        });
 
-    if (response.ok)
-        document.location.reload();
-    else
-        alert(response.statusText);
+        if (response.ok)
+            location.reload();
+        else
+            alert(response.statusText);
+    }
 }
 
 

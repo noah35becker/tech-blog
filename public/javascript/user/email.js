@@ -6,19 +6,21 @@ async function updateEmailFormHandler(event){
     const email = $('#new-email').val().trim();
     const password = $('#password').val();
 
-    const response = await fetch('/api/user/update-email', {
-        method: 'put',
-        body: JSON.stringify({
-            email,
-            password
-        }),
-        headers: {'Content-Type': 'application/json'}
-    });
+    if (email && password){
+        const response = await fetch('/api/user/update-email', {
+            method: 'put',
+            body: JSON.stringify({
+                email,
+                password
+            }),
+            headers: {'Content-Type': 'application/json'}
+        });
 
-    if (response.ok){
-        document.location.replace('/dashboard');
-    } else
-        alert(response.statusText);
+        if (response.ok){
+            location.replace('/dashboard');
+        }else
+            alert(response.statusText);
+    }
 }
 
 
