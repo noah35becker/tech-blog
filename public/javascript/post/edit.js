@@ -5,23 +5,17 @@ function editPostSpace(){
 
 const secondToLastUrlPath = location.toString().split('/')[location.toString().split('/').length - 2];
 
-const titleWrapperEl = $('.title-wrapper');
-const contentWrapperEl = $('.content-wrapper');
-
 const titleStaticEl = $('h5.title');
 const contentStaticEl = $('p.content');
 
-const titleEditorEl = $('<input type="text" id="title-editor" />');
-const contentEditorEl = $('<textarea id="content-editor" />');
-
-const deletePostBtnEl = $('.delete-post-btn');
+const titleEditorEl = $('<input type="text" id="title-editor" class="mt-1 mb-3" />');
+const contentEditorEl = $('<textarea id="content-editor" class="mb-2" />');
 
 
 
 // FUNCTIONS
 
 function editPostBtnHandler(postId){
-
     if (secondToLastUrlPath !== 'post'){
         location.replace(`/post/${postId}?edit_now=1`);
         return;
@@ -30,18 +24,22 @@ function editPostBtnHandler(postId){
     titleEditorEl.val(titleStaticEl.text());
     contentEditorEl.val(contentStaticEl.text());
 
-    titleStaticEl.detach();
-    contentStaticEl.detach();
+    const savePostBtn = $(`<button
+        type="button"
+        class="save-post-btn btn btn-success mt-2">
+        <i class="fa-regular fa-floppy-disk"></i>&nbsp;&nbsp;Update
+    </button>`);
 
-    titleWrapperEl.append(titleEditorEl);
-    contentWrapperEl.append(contentEditorEl);
+    titleStaticEl.remove();
+    contentStaticEl.remove();
 
-    $('.edit-post-btn')
-        .removeClass('edit-post-btn')
-        .addClass('save-post-btn')
-        .text('Save');
+    $('article.post').removeClass('border bg-light');
 
-    deletePostBtnEl.hide();
+    $('.title-wrapper').text('').append(titleEditorEl);
+    $('.content-wrapper').append(contentEditorEl);
+    $('article.post').append(savePostBtn);
+    
+    $('article.post .meta').hide();
 }
 
 

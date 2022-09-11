@@ -1,13 +1,13 @@
 
-<article class="comment" comment-id="{{id}}">
-    <p class="content">{{content}}</p>
+<article class="comment mb-3 border pt-2 px-3 pb-1" comment-id="{{id}}">
+    <p class="content mb-1">{{content}}</p>
 
-    {{#if (compare user.id currentUserId)}}
-        <button class="delete-comment-btn btn btn-primary">Delete</button>
-    {{/if}}
-
-    <div class="meta">
-        {{user.username}}&nbsp;&nbsp;|&nbsp;&nbsp;{{format_date createdAt}}
+    <div class="meta mb-1 fst-italic">
+        {{user.username}}&nbsp;&nbsp;|&nbsp;&nbsp;{{format_date createdAt}}&nbsp;
+        
+        {{#if (compare user.id currentUserId)}}
+            &nbsp;<button class="delete-comment-btn btn btn-sm my-2"><i class="fa-regular fa-trash-can"></i></button>
+        {{/if}}
     </div>
 
     {{#if (compare user.id currentUserId)}}

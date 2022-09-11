@@ -2,8 +2,8 @@
 function addCommentSpace(){
     
 // VARIABLES
-const addCommentWrapperEl = $('.add-comment-wrapper');
-const newCommentEl = $('<textarea id="new-comment" placeholder="new comment" />');
+const addCommentWrapperEl = $('#add-comment-wrapper');
+const newCommentEl = $('<input id="new-comment" placeholder="New comment" class="mt-1 mb-3" />');
 
 const postId = +$('article.post').attr('post-id');
 
@@ -11,17 +11,22 @@ const postId = +$('article.post').attr('post-id');
 
 // FUNCTIONS
 
-function addCommentBtnHandler(){
+function addCommentBtnHandler(event){
+    event.preventDefault();
+
     addCommentWrapperEl.prepend(newCommentEl);
 
     $('.add-comment-btn')
         .removeClass('add-comment-btn')
         .addClass('save-new-comment-btn')
-        .text('Post new comment');
+        .html('<i class="fa-regular fa-message"></i>&nbsp;&nbsp;Post comment')
+        .attr('type', 'submit');
 }
 
 
-async function saveNewCommentBtnHandler(){
+async function saveNewCommentBtnHandler(event){
+    event.preventDefault();
+
     const newComment = newCommentEl.val().trim();
 
     if (newComment){
@@ -44,8 +49,8 @@ async function saveNewCommentBtnHandler(){
 
 
 // EVENT LISTENERS
-$('.add-comment-wrapper').on('click', '.add-comment-btn', addCommentBtnHandler);
-$('.add-comment-wrapper').on('click', '.save-new-comment-btn', saveNewCommentBtnHandler);
+addCommentWrapperEl.on('click', '.add-comment-btn', addCommentBtnHandler);
+addCommentWrapperEl.on('click', '.save-new-comment-btn', saveNewCommentBtnHandler);
 
 }
 

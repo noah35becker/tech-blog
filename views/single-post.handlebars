@@ -3,15 +3,21 @@
     {{>post-info post=this currentUserId=../currentUserId linkedTitle=false editNow=../editNow}}
 {{/with}}
 
-<div class="add-comment-wrapper">
-    <button type="button" class="add-comment-btn btn btn-primary">Add comment</button>
-</div>
-
 <div class="comments-wrapper">
+    {{#if post.comments.length}}
+        <h6 class="text-center text-sm-start mb-3">Comments:</h6>
+    {{/if}}
+
     {{#each post.comments}}
         {{>comment this currentUserId=../currentUserId}}
     {{/each}}
 </div>
+
+{{#if loggedIn}}
+    <form id="add-comment-wrapper" class="d-flex flex-column align-items-center align-items-sm-start mb-4">
+        <button type="button" class="add-comment-btn btn btn-warning mt-1"><i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add comment</button>
+    </form>
+{{/if}}
 
 
 <script src="/javascript/comment/add.js"></script>

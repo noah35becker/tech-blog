@@ -1,21 +1,27 @@
 
-<h3>Welcome, {{user.username}}</h3>
+<header class="text-center text-sm-start">
+    <h3 class="mb-3">Welcome, <span class="fst-italic">{{user.username}}</span></h3>
 
-<div class="new-post-wrapper">
-    <button type="button" class="new-post-btn btn btn-primary">New post</button>
-</div>
+    <div class="new-post-wrapper mb-4 d-flex flex-column align-items-center align-items-sm-start">
+        <button type="button" class="new-post-btn btn btn-success"><i class="fa-solid fa-plus"></i>&nbsp;&nbsp;New post</button>
+    </div>
+
+    <div class="update-user-info-wrapper mb-4">
+        <button id="update-password-dashboard-btn" type="button" class="btn btn-secondary btn-sm me-2 mb-2">Update password</button>
+        <button id="update-username-dashboard-btn" type="button" class="btn btn-secondary btn-sm me-2 mb-2">Update username</button>
+        <button id="update-email-dashboard-btn" type="button" class="btn btn-secondary btn-sm me-2 mb-2">Update email</button>
+        <button id="delete-account-dashboard-btn" type="button" class="btn btn-secondary btn-sm me-2 mb-2">Delete account</button>
+    </div>
+</header>
 
 <div class="posts-wrapper">
+    {{#if user.posts.length}}
+        <h4 class="mb-3 text-center text-sm-start">Your posts:</h4>
+    {{/if}}
+
     {{#each user.posts as |post|}}
         {{>post-info post=post currentUserId=../currentUserId showUsernames=false linkedTitle=true}}
     {{/each}}
-</div>
-
-<div class="update-user-info-wrapper">
-    <button id="update-password-dashboard-btn" type="button" class="btn btn-primary">Update password</button>
-    <button id="update-username-dashboard-btn" type="button" class="btn btn-primary">Update username</button>
-    <button id="update-email-dashboard-btn" type="button" class="btn btn-primary">Update email</button>
-    <button id="delete-account-dashboard-btn" type="button" class="btn btn-primary">Delete account</button>
 </div>
 
 <script src="/javascript/post/new.js"></script>

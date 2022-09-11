@@ -5,10 +5,8 @@ function newPostSpace(){
 
 const newPostWrapperEl = $('.new-post-wrapper');
 
-const newPostBtnEl = $('.new-post-btn');
-
-const newTitleEl = $('<input type="text" id="title-editor" placeholder="title" />');
-const newContentEl = $('<textarea id="content-editor" placeholder="content" />');
+const newTitleEl = $('<input type="text" id="title-editor" placeholder="Title" class="mt-1 mb-3" />');
+const newContentEl = $('<textarea id="content-editor" placeholder="Content" class="mb-2" />');
 
 
 
@@ -20,8 +18,8 @@ function newPostBtnHandler(){
 
     $('.new-post-btn')
         .removeClass('new-post-btn')
-        .addClass('save-new-post-btn')
-        .text('Save new post');
+        .addClass('save-new-post-btn mt-2')
+        .html('<i class="fa-regular fa-floppy-disk"></i>&nbsp;&nbsp;Save new post');
 }
 
 

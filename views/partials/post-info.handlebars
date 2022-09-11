@@ -1,6 +1,6 @@
 
 <article
-    class="post"
+    class="post mb-4 border bg-light p-2"
     post-id="{{id}}"
     edit-now=
         {{#if editNow}}
@@ -12,30 +12,40 @@
 
     <header class="title-wrapper">
         {{#if linkedTitle}}
-            <a href="/post/{{id}}">
-                <h5 class="title">{{title}}</h5>
-            </a>
+            <a href="/post/{{id}}"><h5 class="title d-inline">{{title}}</h5></a>
         {{else}}
-            <h5 class="title">{{title}}</h5>
+            <h5 class="title d-inline">{{title}}</h5>
+        {{/if}}
+        {{#if (compare user.id currentUserId)}}
+            &nbsp;
+            <button class="edit-post-btn btn btn-info me-1"><i class="fa-regular fa-pen-to-square"></i></button>
+            <button class="delete-post-btn btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
         {{/if}}
     </header>
 
     <div class="content-wrapper">
-        <p class="content">{{content}}</p>
+        <p class="content mt-2">{{content}}</p>
     </div>
 
-    {{#if (compare user.id currentUserId)}}
-        <button class="edit-post-btn btn btn-primary">Edit</button>
-        <button class="delete-post-btn btn btn-primary">Delete</button>
-    {{/if}}
+    
 
-    <div class="meta">
+    <div class="meta fst-italic">
         {{#if showUsernames}}
             Posted by: {{user.username}}&nbsp;&nbsp;|&nbsp;
         {{/if}}
-
-        {{comments.length}} {{format_plural 'comment' comments.length}}&nbsp;&nbsp;|&nbsp;
         
+        {{#if comments.length}}
+            {{#if linkedTitle}}
+                <a href="/post/{{id}}">{{comments.length}} {{format_plural 'comment' comments.length}}</a>
+            {{else}}
+                {{comments.length}} {{format_plural 'comment' comments.length}}
+            {{/if}}
+        {{else}}
+            {{comments.length}} {{format_plural 'comment' comments.length}}
+        {{/if}}
+
+        &nbsp;|&nbsp;
+    
         {{#if updatedAt}}
             Updated on {{format_date updatedAt}}
         {{else}}
