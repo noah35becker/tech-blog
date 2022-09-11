@@ -8,5 +8,7 @@ module.exports = {
 
     format_plural: (word, quantity) => quantity === 1 ? word : word+'s',
 
+    breaklines: content => content.replaceAll('\n', '<br>'),
+
     compare: (a, b) => a === b
 };
