@@ -15,7 +15,7 @@ async function deleteAccountFormHandler(event){
         });
 
         if (response.ok)
-            location.replace('/dashboard');
+            location.replace('/login');
         else if (response.status === 400){
             const responseJson = await response.json();
             alert(responseJson.message);
