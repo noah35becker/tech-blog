@@ -107,12 +107,12 @@ input#title-editor, textarea#content-editor, .new-post-wrapper button{
 }
 
 input#title-editor{
-    width: 250px;
+    width: 350px;
     min-width: none;
 }
 
 textarea#content-editor{
-    width: 350px;
+    width: 475px;
     height: 100px;
     min-width: none;
 }
