@@ -14,10 +14,12 @@ async function deleteAccountFormHandler(event){
             headers: {'Content-Type': 'application/json'}
         });
 
-        if (response.ok){
-            location.replace('/login');
-        } else
-            alert(response.statusText);
+        if (response.ok)
+            location.replace('/dashboard');
+        else if (response.status === 400){
+            const responseJson = await response.json();
+            alert(responseJson.message);
+        }
     }
 }
 

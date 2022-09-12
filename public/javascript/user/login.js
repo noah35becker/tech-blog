@@ -19,8 +19,8 @@ async function loginFormHandler(event){
 
         if (response.ok)
             location.replace('/dashboard');
-        else
-            alert(response.statusText);
+        else if (response.status === 400 || response.status === 404)
+            alert('Invalid email / password combination');
     }
 }
 
@@ -44,8 +44,10 @@ async function signupFormHandler(event){
 
         if (response.ok)
             location.replace('/dashboard');
-        else
-            alert(response.statusText);
+        else if (response.status === 500){
+            const responseJson = await response.json();
+            alert(responseJson.message);
+        }
     }
 }
 

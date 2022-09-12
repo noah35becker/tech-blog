@@ -26,8 +26,10 @@ router.get('/', async (req, res) => {
         order: [['updatedAt', 'DESC']]
     });
 
-    dbPostsData = dbPostsData.map(post => post.get({plain: true}));
-    purgeUpdatedAtProperty(dbPostsData);
+    if (dbPostsData.length){
+        dbPostsData = dbPostsData.map(post => post.get({plain: true}));
+        purgeUpdatedAtProperty(dbPostsData);
+    }
 
     res.render('homepage', {
         posts: dbPostsData,
@@ -64,6 +66,11 @@ router.get('/post/:id', async (req, res) => {
             }
         ]
     });
+
+    if (!dbPostData){
+        res.status(404).redirect('/');
+        return;
+    }
 
     dbPostData = dbPostData.get({plain: true});
     dbPostData = purgeUpdatedAtProperty([dbPostData])[0];

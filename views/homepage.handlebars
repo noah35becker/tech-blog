@@ -1,6 +1,11 @@
 
 <div class="posts-wrapper">
-    {{#each posts as |post|}}
-        {{>post-info post=post currentUserId=../currentUserId showUsernames=true linkedTitle=true}}
-    {{/each}}
+    {{#if posts.length}}
+        {{#each posts as |post|}}
+            {{>post-info post=post currentUserId=../currentUserId showUsernames=true linkedTitle=true}}
+        {{/each}}
+    {{else}}
+        <h5 class="fst-italic mb-3">There are no posts in the database yet—</h5>
+        <h5 class="fst-italic">Check back here soon, or <a href="/login">log in</a> and post something yourself!</h5>
+    {{/if}}
 </div>

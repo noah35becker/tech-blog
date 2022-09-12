@@ -16,10 +16,12 @@ async function updateEmailFormHandler(event){
             headers: {'Content-Type': 'application/json'}
         });
 
-        if (response.ok){
+        if (response.ok)
             location.replace('/dashboard');
-        }else
-            alert(response.statusText);
+        else if (response.status === 400 || response.status === 500){
+            const responseJson = await response.json();
+            alert(responseJson.message);
+        }
     }
 }
 

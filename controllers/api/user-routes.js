@@ -81,7 +81,12 @@ router.post('/', isLoggedOut, async (req, res) => {
         });
     }catch (err){
         console.log(err);
-        res.status(400).json(err);
+
+        let errJson = JSON.parse(JSON.stringify(err));
+        if (errJson.name === 'SequelizeUniqueConstraintError')
+            errJson.message = 'This username and/or email address are already taken'
+        
+        res.status(500).send(errJson);
     }
 });
 
@@ -193,7 +198,12 @@ router.put('/update-username', isLoggedIn, async (req, res) => { // expects {use
         });
     }catch (err){
         console.log(err);
-        res.status(500).json(err);
+
+        let errJson = JSON.parse(JSON.stringify(err));
+        if (errJson.name === 'SequelizeUniqueConstraintError')
+            errJson.message = 'This username is already taken';
+        
+        res.status(500).send(errJson);  
     }
 });
 
@@ -227,7 +237,12 @@ router.put('/update-email', isLoggedIn, async (req, res) => { // expects {email,
         });
     }catch (err){
         console.log(err);
-        res.status(500).json(err);
+
+        let errJson = JSON.parse(JSON.stringify(err));
+        if (errJson.name === 'SequelizeUniqueConstraintError')
+            errJson.message = 'This email address is already taken';
+        
+        res.status(500).send(errJson);
     }
 });
 
