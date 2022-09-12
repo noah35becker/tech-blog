@@ -17,7 +17,10 @@ const contentEditorEl = $('<textarea id="content-editor" class="mb-2" />');
 
 function editPostBtnHandler(postId){
     if (secondToLastUrlPath !== 'post'){
-        location.replace(`/post/${postId}?edit_now=1`);
+        let lastUrlPath = location.toString().split('/')[location.toString().split('/').length - 1];
+        const from = lastUrlPath === 'dashboard' ? 'dashboard' : 'home';
+
+        location.replace(`/post/${postId}?edit_now=1&from=${from}`);
         return;
     }
 
@@ -57,9 +60,20 @@ async function savePostBtnHandler(postId){
             headers: {'Content-Type': 'application/json'}
         });
 
-        if (response.ok)
-            location.replace(location.toString().split('?')[0]);
-        else
+        if (response.ok){
+            const fromPage = new URLSearchParams(location.search).get('from');
+            switch (fromPage) {
+                case 'dashboard':
+                    location.replace('/dashboard');
+                    break;
+                case 'home':
+                    location.replace('/');
+                    break;
+                default:
+                    location.replace(location.toString().split('?')[0]);
+                    break;
+                }
+        }else
             alert(response.statusText);
     }
 }
