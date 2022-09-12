@@ -22,7 +22,7 @@ function editPostBtnHandler(postId){
     }
 
     titleEditorEl.val(titleStaticEl.text());
-    contentEditorEl.val(contentStaticEl.text());
+    contentEditorEl.val(contentStaticEl.html().replaceAll('<br>', '\n'));
 
     const savePostBtn = $(`<button
         type="button"
