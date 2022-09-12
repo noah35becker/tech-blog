@@ -37,16 +37,8 @@ main>.post .title,
     font-size: .85rem;
 }
 
-.content{
-    max-width: 600px;
-}
-
 
 /* COMMENT PARTIAL */
-
-.comment{
-    max-width: 750px;
-}
 
 .comment .content{
     font-size: .9rem;
@@ -120,7 +112,7 @@ textarea#content-editor{
 
 /* SINGLE POST PAGE */
 input#new-comment{
-    width: 475px;
+    width: 85vw;
 }
 
 
