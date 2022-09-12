@@ -41,7 +41,10 @@ router.get('/', async (req, res) => {
 
 // Login page
 router.get('/login', isLoggedOut, (req, res) =>
-    res.render('login', {loggedIn: false})
+    res.render('login', {
+        loggedIn: false,
+        page_subtitle: 'Login'
+    })
 );
 
 
@@ -78,6 +81,7 @@ router.get('/post/:id', async (req, res) => {
     res.render('single-post', {
         post: dbPostData,
         loggedIn: req.session.loggedIn,
+        page_subtitle: `Single post`,
         editNow: +req.query.edit_now,
         currentUserId: req.session.user_id
     })

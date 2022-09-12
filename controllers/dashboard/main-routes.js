@@ -30,7 +30,8 @@ router.get('/', isLoggedIn, async (req, res) => {
 
     res.render('dashboard', {
         user: currentUserData,
-        loggedIn: true
+        loggedIn: true,
+        page_subtitle: 'Dashboard'
     });
 });
 
