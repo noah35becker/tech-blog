@@ -72,8 +72,7 @@ Learn more about this license [here](https://choosealicense.com/licenses/agpl-3.
 
 
 ## Directions for future development
-- The <b>email</b> feature is only for show right now. It should be developed to actually include account management functionality.
-- Once email is working properly, <b>account verification upon signup</b> + <b>account recovery</b> features should be added.
+- The <b>email</b> feature is only nominal at this time. It should be developed to actually include account management functionality, including account verification upon signup + account recovery.
 - <b>Username and password validation</b> (minimum # of characters, required uppercase/lowercase/special characters, etc.) should be added.
 - All screens that require a password should have the option to <b>show or hide</b> it while inputting.
 - There are places on the application where it would be helpful to have the user <b>enter their password twice</b>.
