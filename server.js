@@ -35,7 +35,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 const sess = {
-    secret: process.env.SESSION_SECRET || 'default secret phrase',
+    secret: process.env.SESSION_SECRET,
     cookie: {maxAge: sessionTimeout}, // Login session expires after sessionTimeout ms...
     rolling: true, // ... for which the timer resets each time a page load/reload occurs
     resave: false,
