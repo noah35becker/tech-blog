@@ -1,18 +1,39 @@
 
-const isLoggedIn = (req, res, next) => {
+const isLoggedInApiAuth = (req, res, next) => {
     if (req.session.loggedIn)
         next();
     else
-        res.redirect('/login');
+        res.redirect(401, '/login');
 };
 
 
-const isLoggedOut = (req, res, next) => {
+const isLoggedInUrlAuth = (req, res, next) => {
+    if (req.session.loggedIn)
+        next();
+    else
+        res.status(401).redirect('/login');
+};
+
+
+const isLoggedOutApiAuth = (req, res, next) => {
     if (!req.session.loggedIn)
         next();
     else
-        res.redirect('/');
+        res.redirect(403, '/');
 };
 
 
-module.exports={isLoggedIn, isLoggedOut};
+const isLoggedOutUrlAuth = (req, res, next) => {
+    if (!req.session.loggedIn)
+        next();
+    else
+        res.status(403).redirect('/dashboard');
+};
+
+
+module.exports = {
+    isLoggedInApiAuth,
+    isLoggedInUrlAuth,
+    isLoggedOutApiAuth,
+    isLoggedOutUrlAuth
+};

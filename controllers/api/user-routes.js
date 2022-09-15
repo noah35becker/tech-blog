@@ -1,7 +1,7 @@
 
 // IMPORTS
 const router = require('express').Router();
-const {isLoggedIn, isLoggedOut} = require('../../utils/auth');
+const {isLoggedInApiAuth, isLoggedOutApiAuth} = require('../../utils/auth');
 const {User, Post} = require('../../models');
 require('dotenv').config();
 
@@ -59,7 +59,7 @@ router.get('/:id', async (req, res) => {
 
 
 // Create new user + log them in
-router.post('/', isLoggedOut, async (req, res) => {
+router.post('/', isLoggedOutApiAuth, async (req, res) => {
     try {
         const dbUserData = await User.create({
             username: req.body.username,
@@ -74,25 +74,26 @@ router.post('/', isLoggedOut, async (req, res) => {
 
             const jsonUserData = dbUserData.get({plain: true});
             delete jsonUserData.password;
-            res.json({
+            res.json({ // This must occur INSIDE req.session.save (due to synchronicity)
                 message: 'New user successfully created + logged in',
                 user: jsonUserData
-            }); // This must occur INSIDE req.session.save (due to synchronicity)
+            });
         });
     }catch (err){
         console.log(err);
 
         let errJson = JSON.parse(JSON.stringify(err));
-        if (errJson.name === 'SequelizeUniqueConstraintError')
-            errJson.message = 'This username and/or email address are already taken'
-        
-        res.status(500).send(errJson);
+        if (errJson.name === 'SequelizeUniqueConstraintError'){
+            errJson.message = 'This username and/or email address are already taken';
+            res.status(409).send(errJson);
+        } else
+            res.status(500).send(errJson);
     }
 });
 
 
 // Login
-router.post('/login', isLoggedOut, async (req, res) => {
+router.post('/login', isLoggedOutApiAuth, async (req, res) => {
     try{
         const dbUserData = await User.findOne({
             where: {
@@ -131,13 +132,14 @@ router.post('/login', isLoggedOut, async (req, res) => {
 
 
 // Logout
-router.post('/logout', isLoggedIn, (req, res) =>
-    req.session.destroy(() => res.status(204).end())
+router.post('/logout',
+    isLoggedInApiAuth, // technically unnecessary: req.session.destroy() will work even if there's no session to destroy
+    (req, res) => req.session.destroy(() => res.status(204).end())
 );
 
 
 // Update user's password
-router.put('/update-password', isLoggedIn, async (req, res) => { // expects {old_password, new_password}
+router.put('/update-password', isLoggedInApiAuth, async (req, res) => { // expects {old_password, new_password}
     try{
         const dbUserData = await User.findByPk(req.session.user_id);
 
@@ -170,7 +172,7 @@ router.put('/update-password', isLoggedIn, async (req, res) => { // expects {old
 
 
 // Update user's username
-router.put('/update-username', isLoggedIn, async (req, res) => { // expects {username, password}
+router.put('/update-username', isLoggedInApiAuth, async (req, res) => { // expects {username, password}
     try{
         const dbUserData = await User.findByPk(req.session.user_id);
 
@@ -200,16 +202,17 @@ router.put('/update-username', isLoggedIn, async (req, res) => { // expects {use
         console.log(err);
 
         let errJson = JSON.parse(JSON.stringify(err));
-        if (errJson.name === 'SequelizeUniqueConstraintError')
+        if (errJson.name === 'SequelizeUniqueConstraintError'){
             errJson.message = 'This username is already taken';
-        
-        res.status(500).send(errJson);  
+            res.status(409).send(errJson);
+        } else
+            res.status(500).send(errJson);  
     }
 });
 
 
 // Update user's email
-router.put('/update-email', isLoggedIn, async (req, res) => { // expects {email, password}
+router.put('/update-email', isLoggedInApiAuth, async (req, res) => { // expects {email, password}
     try{
         const dbUserData = await User.findByPk(req.session.user_id);
 
@@ -239,16 +242,17 @@ router.put('/update-email', isLoggedIn, async (req, res) => { // expects {email,
         console.log(err);
 
         let errJson = JSON.parse(JSON.stringify(err));
-        if (errJson.name === 'SequelizeUniqueConstraintError')
-            errJson.message = 'This email address is already taken';
-        
-        res.status(500).send(errJson);
+        if (errJson.name === 'SequelizeUniqueConstraintError'){
+            errJson.message = 'This username is already taken';
+            res.status(409).send(errJson);
+        } else
+            res.status(500).send(errJson);  
     }
 });
 
 
 // Delete user
-router.delete('/', isLoggedIn, async (req, res) => { // expects {password}
+router.delete('/', isLoggedInApiAuth, async (req, res) => { // expects {password}
     try{
         const dbUserData = await User.findByPk(req.session.user_id);
 

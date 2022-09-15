@@ -13,7 +13,9 @@ async function deletePostBtnHandler(postId){
             location.replace('/dashboard');
         else
             location.replace('/');
-    }else
+    } else if (response.status === 401)
+        location.replace(response.headers.get('location'));
+    else
         alert(response.statusText);
 }
 

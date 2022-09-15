@@ -1,7 +1,7 @@
 
 // IMPORTS
 const router = require('express').Router();
-const {isLoggedIn} = require('../../utils/auth');
+const {isLoggedInUrlAuth} = require('../../utils/auth');
 const {User, Post, Comment} = require('../../models');
 const {purgeUpdatedAtProperty} = require('../../utils/general-helpers');
 
@@ -9,7 +9,7 @@ const {purgeUpdatedAtProperty} = require('../../utils/general-helpers');
 
 // ROUTE
 
-router.get('/', isLoggedIn, async (req, res) => {
+router.get('/', isLoggedInUrlAuth, async (req, res) => {
     let currentUserData = await User.findByPk(req.session.user_id, {
         include: {
             model: Post,
@@ -26,7 +26,7 @@ router.get('/', isLoggedIn, async (req, res) => {
     });
 
     currentUserData = currentUserData.get({plain: true});
-    purgeUpdatedAtProperty(currentUserData.posts);
+    currentUserData.posts = purgeUpdatedAtProperty(currentUserData.posts);
 
     res.render('dashboard', {
         user: currentUserData,

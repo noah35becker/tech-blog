@@ -22,6 +22,8 @@ const routes = require('./controllers');
 
 const PORT = process.env.PORT || 3001;
 
+const {sessionTimeout} = require('./utils/general-helpers');
+
 
 
 // MIDDLEWARE
@@ -34,7 +36,7 @@ app.use(express.json());
 
 const sess = {
     secret: process.env.SESSION_SECRET || 'default secret phrase',
-    cookie: {maxAge: 1000 * 60 * 10}, // Login session expires after 10 minutes...
+    cookie: {maxAge: sessionTimeout}, // Login session expires after sessionTimeout ms...
     rolling: true, // ... for which the timer resets each time a page load/reload occurs
     resave: false,
     saveUninitialized: true,

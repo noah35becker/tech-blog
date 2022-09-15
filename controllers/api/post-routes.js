@@ -1,7 +1,7 @@
 
 // IMPORTS
 const router = require('express').Router();
-const {isLoggedIn} = require('../../utils/auth');
+const {isLoggedInApiAuth} = require('../../utils/auth');
 const {Post, User, Comment} = require('../../models');
 
 
@@ -73,7 +73,7 @@ router.get('/:id', async (req, res) => {
 
 
 // Create new
-router.post('/', isLoggedIn, async (req, res) => {
+router.post('/', isLoggedInApiAuth, async (req, res) => {
     try {
         const dbPostData = await Post.create({
             title: req.body.title,
@@ -93,7 +93,7 @@ router.post('/', isLoggedIn, async (req, res) => {
 
 
 // Update preexisting
-router.put('/:id', async (req, res) => {
+router.put('/:id', isLoggedInApiAuth, async (req, res) => {
     try{
         const dbPostData = await Post.findByPk(req.params.id);
 
@@ -127,7 +127,7 @@ router.put('/:id', async (req, res) => {
 
 
 // Delete
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', isLoggedInApiAuth, async (req, res) => {
     try{
         const dbPostData = await Post.findByPk(req.params.id);
 

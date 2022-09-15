@@ -18,10 +18,13 @@ async function updateUsernameFormHandler(event){
 
         if (response.ok)
             location.replace('/dashboard');
-        else if (response.status === 400 || response.status === 500){
+        else if (response.status === 400 || response.status === 409){
             const responseJson = await response.json();
             alert(responseJson.message);
-        }
+        } else if (response.status === 401)
+            location.replace(response.headers.get('location'));
+        else
+            alert(response.statusText);
     }
 }
 

@@ -37,9 +37,11 @@ async function saveNewPostBtnHandler(){
             headers: {'Content-Type': 'application/json'}
         });
 
-        if (response.ok){
+        if (response.ok)
             location.reload();
-        }else
+        else if (response.status === 401)
+            location.replace(response.headers.get('location'));
+        else
             alert(response.statusText);
     }
 }

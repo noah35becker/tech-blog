@@ -6,7 +6,7 @@ async function logout(){
         headers: {'Content-Type': 'application/json'}
     });
 
-    if (response.ok)
+    if (response.ok || response.status === 401)
         location.replace('/');
     else
         alert(response.statusText);

@@ -19,7 +19,10 @@ async function deleteAccountFormHandler(event){
         else if (response.status === 400){
             const responseJson = await response.json();
             alert(responseJson.message);
-        }
+        } else if (response.status === 401)
+            location.replace(response.headers.get('location'));
+        else
+            alert(response.statusText);
     }
 }
 

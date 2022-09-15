@@ -21,6 +21,15 @@ async function loginFormHandler(event){
             location.replace('/dashboard');
         else if (response.status === 400 || response.status === 404)
             alert('Invalid email / password combination');
+        else if (response.status === 403){
+            await fetch('/api/user/logout', {
+                method: 'post',
+                headers: {'Content-Type': 'application/json'}
+            });
+            location.replace('/');
+        }
+        else
+            alert(response.statusText);
     }
 }
 
@@ -44,10 +53,17 @@ async function signupFormHandler(event){
 
         if (response.ok)
             location.replace('/dashboard');
-        else if (response.status === 500){
+        else if (response.status === 409){
             const responseJson = await response.json();
             alert(responseJson.message);
-        }
+        } else if (response.status === 403){
+            await fetch('/api/user/logout', {
+                method: 'post',
+                headers: {'Content-Type': 'application/json'}
+            });
+            location.replace('/');
+        } else
+            alert(response.statusText);
     }
 }
 

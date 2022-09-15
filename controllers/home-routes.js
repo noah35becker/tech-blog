@@ -1,7 +1,7 @@
 
 // IMPORTS
 const router = require('express').Router();
-const {isLoggedOut} = require('../utils/auth');
+const {isLoggedOutUrlAuth} = require('../utils/auth');
 const {Post, User, Comment} = require('../models');
 const {purgeUpdatedAtProperty} = require('../utils/general-helpers');
 
@@ -28,7 +28,7 @@ router.get('/', async (req, res) => {
 
     if (dbPostsData.length){
         dbPostsData = dbPostsData.map(post => post.get({plain: true}));
-        purgeUpdatedAtProperty(dbPostsData);
+        dbPostsData = purgeUpdatedAtProperty(dbPostsData);
     }
 
     res.render('homepage', {
@@ -40,7 +40,7 @@ router.get('/', async (req, res) => {
 
 
 // Login page
-router.get('/login', isLoggedOut, (req, res) =>
+router.get('/login', isLoggedOutUrlAuth, (req, res) =>
     res.render('login', {
         loggedIn: false,
         page_subtitle: 'Login'
@@ -76,7 +76,7 @@ router.get('/post/:id', async (req, res) => {
     }
 
     dbPostData = dbPostData.get({plain: true});
-    dbPostData = purgeUpdatedAtProperty([dbPostData])[0];
+    dbPostData = purgeUpdatedAtProperty(dbPostData);
 
     res.render('single-post', {
         post: dbPostData,

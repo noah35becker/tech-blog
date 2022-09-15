@@ -7,6 +7,8 @@ async function deleteCommentButtonHandler(commentId){
 
     if (response.ok)
         location.reload();
+    else if (response.status === 401)
+        location.replace(response.headers.get('location'));
     else
         alert(response.statusText);
 }

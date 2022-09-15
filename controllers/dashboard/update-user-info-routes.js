@@ -1,12 +1,12 @@
 
 // IMPORTS
 const router = require('express').Router();
-const {isLoggedIn} = require('../../utils/auth');
+const {isLoggedInUrlAuth} = require('../../utils/auth');
 
 
 
 // Update password
-router.get('/password', isLoggedIn, (req, res) => {
+router.get('/password', isLoggedInUrlAuth, (req, res) => {
     res.render('update-user-info/password', {
         loggedIn: true,
         page_subtitle: 'Update password'
@@ -15,7 +15,7 @@ router.get('/password', isLoggedIn, (req, res) => {
 
 
 // Update username
-router.get('/username', isLoggedIn, (req, res) => {
+router.get('/username', isLoggedInUrlAuth, (req, res) => {
     res.render('update-user-info/username', {
         loggedIn: true,
         page_subtitle: 'Update username'
@@ -24,7 +24,7 @@ router.get('/username', isLoggedIn, (req, res) => {
 
 
 // Update email
-router.get('/email', isLoggedIn, (req, res) => {
+router.get('/email', isLoggedInUrlAuth, (req, res) => {
     res.render('update-user-info/email', {
         loggedIn: true,
         page_subtitle: 'Update email'
@@ -33,7 +33,7 @@ router.get('/email', isLoggedIn, (req, res) => {
 
 
 // Delete account
-router.get('/delete-account', isLoggedIn, (req, res) => {
+router.get('/delete-account', isLoggedInUrlAuth, (req, res) => {
     res.render('update-user-info/delete-account', {
         loggedIn: true,
         page_subtitle: 'Delete account'

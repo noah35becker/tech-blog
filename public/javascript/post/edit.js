@@ -73,7 +73,9 @@ async function savePostBtnHandler(postId){
                     location.replace(location.toString().split('?')[0]);
                     break;
                 }
-        }else
+        } else if (response.status === 401)
+            location.replace(response.headers.get('location'));
+        else
             alert(response.statusText);
     }
 }
